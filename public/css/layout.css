@@ -452,6 +452,10 @@ ul#nav li.current a { color: #F06000; }
 }
 
 /* Portfolio Content */
+.contact-msg {
+   color: #fff;
+   padding: 10px;
+}
 #portfolio-wrapper .columns { margin-bottom: 36px; }
 .portfolio-item .item-wrap {
    background: #fff;

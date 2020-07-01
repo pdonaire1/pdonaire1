@@ -1,6 +1,41 @@
 import React, { Component } from 'react';
-
+const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY || '';
 class Contact extends Component {
+  constructor(props){
+    super(props);
+    this.state = { contactMessage: "", contactEmail: "", loading: false };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  async handleSubmit(ev) {
+    ev.preventDefault();
+    this.setState({loading: false, topMessage: ""});
+    const { contactMessage, contactEmail } = this.state;
+    if(!contactMessage || !contactEmail){
+      this.setState({loading: false, topMessage: "Please Fill the Contact Form"});
+      return;
+    }
+    const sgMail = require('@sendgrid/mail');
+    sgMail.setApiKey(SENDGRID_API_KEY);
+    const msg = {
+      to: 'pdonaire1@gmail.com',
+      from: contactEmail,
+      subject: 'pdonaire1.github.io RESUME CONTACT',
+      text: contactMessage,
+      html: `<strong>${contactMessage}</strong>`,
+    };
+    try {
+      await sgMail.send(msg);
+      this.setState({ loading: false, topMessage: "Email sent, you also can contact to me by pdonaire1@gmail.com"});
+    } catch (error) {
+      this.setState({ loading: false, topMessage: "Error sending email, please write to pdonaire1@gmail.com"});
+    }
+    
+  }
+  handleChange(event) {
+    const { name, value } = event.target;
+    this.setState({[name]: value, topMessage: ""});
+  }
   render() {
 
     if(this.props.data){
@@ -35,35 +70,37 @@ class Contact extends Component {
 
          <div className="row">
             <div className="eight columns">
+            {this.state.topMessage && <h2 className="contact-msg">{this.state.topMessage}</h2>}
 
                <form action="" method="post" id="contactForm" name="contactForm">
 					<fieldset>
-
-                  <div>
+                  {/*<div>
 						   <label htmlFor="contactName">Name <span className="required">*</span></label>
 						   <input type="text" defaultValue="" size="35" id="contactName" name="contactName" onChange={this.handleChange}/>
-                  </div>
+                  </div>*/}
 
                   <div>
 						   <label htmlFor="contactEmail">Email <span className="required">*</span></label>
-						   <input type="text" defaultValue="" size="35" id="contactEmail" name="contactEmail" onChange={this.handleChange}/>/>
+						   <input type="text" defaultValue="" size="35" id="contactEmail" name="contactEmail" onChange={this.handleChange}/>
                   </div>
 
-                  <div>
+                  {/*<div>
 						   <label htmlFor="contactSubject">Subject</label>
 						   <input type="text" defaultValue="" size="35" id="contactSubject" name="contactSubject" onChange={this.handleChange}/>/>
-                  </div>
+                  </div>*/}
 
                   <div>
                      <label htmlFor="contactMessage">Message <span className="required">*</span></label>
-                     <textarea cols="50" rows="15" id="contactMessage" name="contactMessage"></textarea>
+                     <textarea cols="50" rows="15" id="contactMessage" name="contactMessage" onChange={this.handleChange}></textarea>
                   </div>
 
                   <div>
-                     <button className="submit">Submit</button>
-                     <span id="image-loader">
-                        <img alt="" src="images/loader.gif" />
-                     </span>
+                    <button className="submit" onClick={this.handleSubmit} disabled={this.state.loading}>
+                      { !this.state.loading ? "Submit": "Loading..." }
+                    </button>
+                    <span id="image-loader">
+                      <img alt="" src="images/loader.gif" />
+                    </span>
                   </div>
 					</fieldset>
 				   </form>
