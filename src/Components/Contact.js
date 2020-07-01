@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY || '';
+var request = require('request');
+
 class Contact extends Component {
   constructor(props){
     super(props);
@@ -15,21 +17,36 @@ class Contact extends Component {
       this.setState({loading: false, topMessage: "Please Fill the Contact Form"});
       return;
     }
-    const sgMail = require('@sendgrid/mail');
-    sgMail.setApiKey(SENDGRID_API_KEY);
-    const msg = {
-      to: 'pdonaire1@gmail.com',
-      from: contactEmail,
-      subject: 'pdonaire1.github.io RESUME CONTACT',
-      text: contactMessage,
-      html: `<strong>${contactMessage}</strong>`,
+    var headers = {
+      'Authorization': `Bearer ${SENDGRID_API_KEY}`,
+      'Content-Type': 'application/json'
     };
-    try {
-      await sgMail.send(msg);
-      this.setState({ loading: false, topMessage: "Email sent, you also can contact to me by pdonaire1@gmail.com"});
-    } catch (error) {
-      this.setState({ loading: false, topMessage: "Error sending email, please write to pdonaire1@gmail.com"});
+
+    var dataString = `{"personalizations": [
+        {"to": [{"email": "pdonaire1@gmail.com"}]}
+      ],
+      "from": {"email": "${contactEmail}"},
+      "subject": "pdonaire1 RESUME CONTACT FROM pdonaire1.github.io",
+      "content": [
+        {
+          "type": "text/plain",
+          "value": "${contactMessage}"]}`;
+
+    var options = {
+      url: 'https://api.sendgrid.com/v3/mail/send',
+      method: 'POST',
+      headers: headers,
+      body: dataString
+    };
+
+    const callback = (error, response, body) => {
+      if (!error && response.statusCode === 200) {
+        this.setState({ loading: false, topMessage: "Email sent, you also can contact to me by pdonaire1@gmail.com"});
+      } else {
+        this.setState({ loading: false, topMessage: "Error sending email, please write to pdonaire1@gmail.com"});
+      }
     }
+    request(options, callback);
     
   }
   handleChange(event) {
