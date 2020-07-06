@@ -6,7 +6,7 @@
 I'm Pablo González System Engineer - FullStack Software Developer. I've participated in software innovations, Web Development, Android, IOS, API Rest Services, with knowledge to solve any problem. This Repo contains my personal Resume with some projects and examples.
 
 ## Credits
-##### Udemy Course
+##### Base Template
 <a href="https://react-resume-template.herokuapp.com/">Tim Baker</a>
 
 #### HTML Design Template
