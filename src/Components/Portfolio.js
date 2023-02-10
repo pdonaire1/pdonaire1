@@ -9,7 +9,7 @@ class Portfolio extends Component {
         return <Project key={i} data={projects} />
       })
     }
-
+    return false;
     return (
       <section id="portfolio">
 
