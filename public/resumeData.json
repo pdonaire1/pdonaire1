@@ -163,9 +163,9 @@
   },
   "challenges": [
     {
-      "name": "CodeWars (8Kyu)",
+      "name": "CodeWars",
       "type": "percentage",
-      "level": "90%",
+      "level": "85%",
       "link": "https://www.codewars.com/users/pdonaire1/completed"
     },
     {
@@ -209,6 +209,12 @@
         "title":"4GeeksPayments",
         "category":"Payment API for developers",
         "image":"4gpayments.jpg",
+        "url":"https://payments.4geeks.io/"
+      },
+      {
+        "title":"Portrait",
+        "category":"Payment API for developers",
+        "image":"portraitapp.png",
         "url":"https://payments.4geeks.io/"
       },
       {
