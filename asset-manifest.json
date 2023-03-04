@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.css": "/pdonaire1/static/css/main.31d6cfe0.css",
-    "main.js": "/pdonaire1/static/js/main.0402f3c1.js",
-    "index.html": "/pdonaire1/index.html",
-    "main.0402f3c1.js.map": "/pdonaire1/static/js/main.0402f3c1.js.map"
+    "main.css": "/static/css/main.31d6cfe0.css",
+    "main.js": "/static/js/main.a31adfca.js",
+    "index.html": "/index.html",
+    "main.a31adfca.js.map": "/static/js/main.a31adfca.js.map"
   },
   "entrypoints": [
     "static/css/main.31d6cfe0.css",
-    "static/js/main.0402f3c1.js"
+    "static/js/main.a31adfca.js"
   ]
 }
